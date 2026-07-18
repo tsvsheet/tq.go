@@ -1,0 +1,3 @@
+[![actions](https://github.com/tsvsheet/tq.go/actions/workflows/actions.yml/badge.svg)](https://github.com/tsvsheet/tq.go/actions/workflows/actions.yml) [![docs](https://github.com/tsvsheet/tq.go/actions/workflows/docs.yml/badge.svg)](https://github.com/tsvsheet/tq.go/actions/workflows/docs.yml) [![go](https://github.com/tsvsheet/tq.go/actions/workflows/go.yml/badge.svg)](https://github.com/tsvsheet/tq.go/actions/workflows/go.yml) [![release](https://github.com/tsvsheet/tq.go/actions/workflows/release.yml/badge.svg)](https://github.com/tsvsheet/tq.go/actions/workflows/release.yml)
+
+[docs](https://tsvsheet.github.io/docs.tq.go/)

@@ -1,0 +1,90 @@
+version: 2
+
+project_name: tq
+
+dist: dist
+
+git:
+  ignore_tags:
+    - "saved/*"
+
+builds:
+  - id: "{{ .ProjectName }}"
+    main: ./cmd/{{ .ProjectName }}
+    binary: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+    no_unique_dist_dir: true
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - "7"
+    ignore:
+      - goos: windows
+        goarch: arm64
+      - goos: windows
+        goarch: arm
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+    flags:
+      - -buildvcs=false
+      - -trimpath
+
+archives:
+  - id: default
+    name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - LICENSE*
+      - README*
+      - CHANGELOG*
+
+nfpms:
+  - id: packages
+    package_name: tq
+    vendor: tsvsheet
+    homepage: https://tsvsheet.com
+    maintainer: tsvsheet <noreply@tsvsheet.com>
+    description: Query TSV with a pipeline of relational verbs — the tq query language CLI.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+release:
+  mode: keep-existing
+
+snapshot:
+  version_template: "0.0.0-SNAPSHOT-{{.ShortCommit}}"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: Bug Fixes
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 1
+    - title: Others
+      order: 999
