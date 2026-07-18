@@ -197,6 +197,18 @@ func TestCLI_ProgramErrors(t *testing.T) {
 		{name: "syntax error", args: []string{"bogus"}, input: repos, want: tq.ErrSyntax},
 		{name: "missing query", args: []string{}, input: repos, want: constants.ErrMissingArgument},
 		{
+			name:  "extra positional argument",
+			args:  []string{"select name", "repos.tsv", "surplus"},
+			input: repos,
+			want:  constants.ErrTooManyArguments,
+		},
+		{
+			name:  "unknown flag",
+			args:  []string{"--frobnicate", "select name"},
+			input: repos,
+			want:  constants.ErrUsage,
+		},
+		{
 			name:  "invalid at",
 			args:  []string{"--at", "not-a-time", "select name"},
 			input: repos,
@@ -259,6 +271,13 @@ func TestRun_ExitCodes(t *testing.T) {
 			code:     exitSyntaxError,
 			inStderr: string(tq.ErrSyntax),
 		},
+		{
+			name:     "usage error",
+			args:     []string{"--frobnicate", "select name"},
+			input:    repos,
+			code:     exitError,
+			inStderr: string(constants.ErrUsage),
+		},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -274,6 +293,17 @@ func TestRun_ExitCodes(t *testing.T) {
 			assert.Contains(t, errOut.String(), tc.inStderr)
 		})
 	}
+}
+
+// TestCLI_UsageErrorKeepsStdoutClean asserts a flag-parse failure writes
+// nothing to stdout — no help dump into a downstream pipeline — and surfaces
+// as ErrUsage wrapping urfave/cli's diagnostic.
+func TestCLI_UsageErrorKeepsStdoutClean(t *testing.T) {
+	withStdin(t, repos)
+	out, err := runCLI(t, "--frobnicate", "select name")
+	require.Error(t, err)
+	assert.ErrorIs(t, err, constants.ErrUsage)
+	assert.Empty(t, out)
 }
 
 // TestRun_SyntaxErrorCarriesPosition asserts the exit-2 diagnostic names the

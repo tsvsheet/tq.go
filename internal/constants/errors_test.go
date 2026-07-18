@@ -18,7 +18,9 @@ func TestSentinelsDistinctAndMatchable(t *testing.T) {
 		constants.ErrInvalidAt,
 		constants.ErrMissingArgument,
 		constants.ErrOpenFile,
+		constants.ErrTooManyArguments,
 		constants.ErrUnsupportedShell,
+		constants.ErrUsage,
 	}
 	seen := map[string]bool{}
 	for _, s := range sentinels {

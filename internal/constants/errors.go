@@ -4,8 +4,8 @@
 // handling this repo owns — every tq semantic error is a go-tq sentinel.
 package constants
 
-// Imported bare (the package is named error); this file declares only sentinels
-// and uses no builtin error type, so each declaration reads errs.Const.
+// The library's package is named errs; the explicit alias states that beside
+// the import path (go-error), which does not name it.
 import errs "github.com/gomatic/go-error"
 
 // Keep these constants sorted alphabetically.
@@ -13,5 +13,7 @@ const (
 	ErrInvalidAt        errs.Const = "invalid --at time"
 	ErrMissingArgument  errs.Const = "missing required argument"
 	ErrOpenFile         errs.Const = "failed to open file"
+	ErrTooManyArguments errs.Const = "too many arguments"
 	ErrUnsupportedShell errs.Const = "unsupported shell"
+	ErrUsage            errs.Const = "invalid usage"
 )

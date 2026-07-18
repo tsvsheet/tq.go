@@ -12,6 +12,9 @@ import (
 // — is a go-tq call; errors pass through as go-tq's sentinels so the exit-code
 // mapping can errors.Is them.
 func runQuery(streams Streams, args positional, opts tq.Options) error {
+	if len(args) > 2 {
+		return constants.ErrTooManyArguments.With(nil, "unexpected", args.text(2))
+	}
 	query := args.text(0)
 	if query == "" {
 		return constants.ErrMissingArgument.With(nil, "argument", "query")
