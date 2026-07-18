@@ -1,6 +1,6 @@
 # tq.go
 
-The standalone `tq` binary (module `github.com/tsvsheet/tq.go`, class CLI: `go.mod` + `cmd/tq/`): a thin urfave/cli/v3 frontend over [go-tq](https://github.com/tsvsheet/go-tq), the same thin-client shape as [tsvsheet.go](https://github.com/tsvsheet/tsvsheet.go) over go-tsvsheet. The normative language definition lives in [tsvsheet/tq](https://github.com/tsvsheet/tq) (SPECIFICATION.md + grammars); the capability spec and API contract live in `tsvsheet/_projects/specs/tq/`.
+The standalone `tq` binary (module `github.com/tsvsheet/tq.go`, class CLI: `go.mod` + `cmd/tq/`): a thin urfave/cli/v3 frontend over [go-tq](https://github.com/tsvsheet/go-tq), the same thin-client shape as [tsvsheet.go](https://github.com/tsvsheet/tsvsheet.go) over go-tsvsheet. The normative language definition lives in [tsvsheet/tq](https://github.com/tsvsheet/tq) (SPECIFICATION.md + grammars).
 
 ## Layout
 
