@@ -16,6 +16,7 @@ func TestSentinelsDistinctAndMatchable(t *testing.T) {
 
 	sentinels := []error{
 		constants.ErrInvalidAt,
+		constants.ErrManPage,
 		constants.ErrMissingArgument,
 		constants.ErrOpenFile,
 		constants.ErrTooManyArguments,

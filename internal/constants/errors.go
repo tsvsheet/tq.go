@@ -11,6 +11,7 @@ import errs "github.com/gomatic/go-error"
 // Keep these constants sorted alphabetically.
 const (
 	ErrInvalidAt        errs.Const = "invalid --at time"
+	ErrManPage          errs.Const = "failed to render man page"
 	ErrMissingArgument  errs.Const = "missing required argument"
 	ErrOpenFile         errs.Const = "failed to open file"
 	ErrTooManyArguments errs.Const = "too many arguments"

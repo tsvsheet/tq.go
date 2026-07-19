@@ -44,6 +44,7 @@ const (
 // command names.
 const (
 	cmdComplete = "completion"
+	cmdMan      = "man"
 )
 
 // builtinCompletionName renames urfave/cli's auto-added (hidden) shell-completion
@@ -108,7 +109,7 @@ func Command(v Version) *cli.Command {
 				Destination: &cfg.atText,
 			},
 		),
-		Commands: []*cli.Command{completionCommand()},
+		Commands: []*cli.Command{completionCommand(), manCommand()},
 		Action: streamAction(func(s Streams, args positional) error {
 			opts, err := cfg.options(now())
 			if err != nil {

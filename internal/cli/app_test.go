@@ -70,7 +70,7 @@ func TestCommand_Shape(t *testing.T) {
 	for i, c := range cmd.Commands {
 		names[i] = c.Name
 	}
-	assert.ElementsMatch(t, []string{cmdComplete}, names)
+	assert.ElementsMatch(t, []string{cmdComplete, cmdMan}, names)
 }
 
 // TestCLI_Golden drives the cli layer over (input, query, expected stdout)

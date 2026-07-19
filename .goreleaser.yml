@@ -4,6 +4,18 @@ project_name: tq
 
 dist: dist
 
+# Shell completions and the man page ship in every archive and package. They
+# are generated from the CLI's own command tree (the completion and man
+# subcommands) into the gitignored var/ tree — never into dist/, which
+# goreleaser requires empty after its own cleanup.
+before:
+  hooks:
+    - mkdir -p var/extras/completions var/extras/man
+    - sh -c "go run ./cmd/tq completion bash > var/extras/completions/tq.bash"
+    - sh -c "go run ./cmd/tq completion zsh > var/extras/completions/tq.zsh"
+    - sh -c "go run ./cmd/tq completion fish > var/extras/completions/tq.fish"
+    - sh -c "go run ./cmd/tq man > var/extras/man/tq.1"
+
 git:
   ignore_tags:
     - "saved/*"
@@ -48,6 +60,10 @@ archives:
       - LICENSE*
       - README*
       - CHANGELOG*
+      - src: var/extras/completions/*
+        dst: completions
+      - src: var/extras/man/*
+        dst: man
 
 nfpms:
   - id: packages
@@ -60,6 +76,15 @@ nfpms:
     formats:
       - deb
       - rpm
+    contents:
+      - src: var/extras/completions/tq.bash
+        dst: /usr/share/bash-completion/completions/tq
+      - src: var/extras/completions/tq.zsh
+        dst: /usr/share/zsh/site-functions/_tq
+      - src: var/extras/completions/tq.fish
+        dst: /usr/share/fish/vendor_completions.d/tq.fish
+      - src: var/extras/man/tq.1
+        dst: /usr/share/man/man1/tq.1
 
 checksum:
   name_template: "checksums.txt"
