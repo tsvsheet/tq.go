@@ -3,11 +3,11 @@ module github.com/tsvsheet/tq.go
 go 1.26.4
 
 require (
-	github.com/gomatic/go-error v0.3.4
+	github.com/gomatic/go-error v0.3.9
 	github.com/gomatic/go-log v0.3.9
 	github.com/stretchr/testify v1.11.1
-	github.com/tsvsheet/go-tq v0.1.3
-	github.com/tsvsheet/go-tsvsheet v0.7.0
+	github.com/tsvsheet/go-tq v0.1.5
+	github.com/tsvsheet/go-tsvsheet v0.13.0
 	github.com/urfave/cli/v3 v3.10.1
 )
 
