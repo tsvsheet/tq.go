@@ -2,14 +2,10 @@ package cli
 
 import (
 	"context"
-	"errors"
 	"log/slog"
 
 	golog "github.com/gomatic/go-log"
-	tq "github.com/tsvsheet/go-tq"
 	"github.com/urfave/cli/v3"
-
-	"github.com/tsvsheet/tq.go/internal/constants"
 )
 
 const (
@@ -127,15 +123,6 @@ func configureLogger(ctx context.Context, _ *cli.Command) (context.Context, erro
 	return ctx, nil
 }
 
-// usageError wraps a flag-parse failure (unknown flag, malformed value) in
-// this repo's ErrUsage sentinel and suppresses urfave/cli's default handling —
-// which would print the diagnostic a second time and dump the full help text
-// to stdout, into any downstream pipeline. The wrapped error surfaces as the
-// ordinary one-line exit-1 diagnostic instead.
-func usageError(_ context.Context, _ *cli.Command, err error, _ bool) error {
-	return constants.ErrUsage.With(err)
-}
-
 // loggerFlags builds the global --log-level / --log-format flags.
 func loggerFlags() []cli.Flag {
 	return []cli.Flag{
@@ -165,22 +152,4 @@ func Run(ctx context.Context, version Version, args []string) int {
 	slog.SetDefault(golog.LoggerConfig{}.NewLogger(stderr))
 	err := Command(version).Run(ctx, args)
 	return exitCode(err)
-}
-
-// exitCode maps a run error to a process exit code with a one-line stderr
-// diagnostic: a tq query syntax error (go-tq's ErrSyntax, carrying position)
-// is exit 2; every other error — the program-vs-data sentinels
-// (ErrUnknownColumn, ErrCellRef, ErrHeaderless, ErrStrict, ErrLimit) included
-// — is exit 1.
-func exitCode(err error) int {
-	switch {
-	case err == nil:
-		return exitOK
-	case errors.Is(err, tq.ErrSyntax):
-		slog.Error(name, "error", err)
-		return exitSyntaxError
-	default:
-		slog.Error(name, "error", err)
-		return exitError
-	}
 }

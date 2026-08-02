@@ -123,3 +123,19 @@ func TestRunMan_WriteError(t *testing.T) {
 	require.Error(t, err)
 	assert.ErrorIs(t, err, constants.ErrManPage)
 }
+
+// TestManSynopsisAlwaysEndsWithTheSubcommandForm pins the shape of SYNOPSIS.
+// A root that runs directly shows its own argument form first, but every root
+// also takes subcommands, so the subcommand line is unconditional — a manual
+// page that omitted it would document a program that cannot be driven.
+func TestManSynopsisAlwaysEndsWithTheSubcommandForm(t *testing.T) {
+	withArgs := &cli.Command{Name: "app", ArgsUsage: "<query> [file]"}
+	plain := &cli.Command{Name: "app"}
+
+	const subcommandForm = "\\fIcommand\\fR [\\fIcommand options\\fR]"
+
+	assert.Contains(t, manSynopsis(withArgs), subcommandForm)
+	assert.Contains(t, manSynopsis(plain), subcommandForm)
+	assert.Contains(t, manSynopsis(withArgs), "<query> [file]", "and the root's own form comes first when it has one")
+	assert.NotContains(t, manSynopsis(plain), "<query>")
+}

@@ -48,3 +48,23 @@ func TestSupportedShellList(t *testing.T) {
 
 	assert.Equal(t, "bash, zsh, fish", supportedShellList())
 }
+
+// TestCompletionRendererResolvesEverySupportedShell pins the coupling between
+// the shell list and the subcommands EnableShellCompletion installs. The two
+// are declared in different places, and completionRenderer dereferences what it
+// finds — so a shell added to the list and forgotten in the framework wiring
+// would not misbehave, it would panic, and only for the user of that shell.
+// Driving the real command is the point: the built-in exists only once the
+// framework has run, which is exactly the coupling under test.
+func TestCompletionRendererResolvesEverySupportedShell(t *testing.T) {
+	for _, shell := range supportedShells {
+		out, err := runCLI(t, cmdComplete, string(shell))
+
+		require.NoError(t, err, "%s is in supportedShells, so a renderer must exist for it", shell)
+		assert.NotEmpty(t, out)
+	}
+
+	_, err := runCLI(t, cmdComplete, "nonesuch")
+
+	assert.ErrorIs(t, err, constants.ErrUnsupportedShell, "and an unlisted shell is refused, not dereferenced")
+}
