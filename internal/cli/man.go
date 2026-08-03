@@ -128,23 +128,34 @@ func proseLine(st proseState, line manLine) (string, proseState) {
 }
 
 // proseOpen emits the opening request for want when st is not already inside
-// that block kind.
+// that block kind: .EX for an example, .PP for filled text, nothing for a
+// break. The switch is exhaustive over the block kinds, so a new one has to be
+// given its own request here rather than inheriting .PP.
 func proseOpen(st, want proseState) string {
 	if st == want {
 		return ""
 	}
-	if want == proseExample {
-		return ".EX\n"
+	request := ""
+	switch want {
+	case proseExample:
+		request = ".EX\n"
+	case proseText:
+		request = ".PP\n"
+	case proseBreak:
 	}
-	return ".PP\n"
+	return request
 }
 
-// proseClose ends an open .EX block; filled paragraphs need no terminator.
+// proseClose ends an open .EX block; filled paragraphs and breaks need no
+// terminator. Exhaustive over the block kinds for the same reason as proseOpen.
 func proseClose(st proseState) string {
-	if st == proseExample {
-		return ".EE\n"
+	terminator := ""
+	switch st {
+	case proseExample:
+		terminator = ".EE\n"
+	case proseBreak, proseText:
 	}
-	return ""
+	return terminator
 }
 
 // isIndented reports whether line belongs to a literal example block.
