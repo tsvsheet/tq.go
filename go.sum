@@ -10,8 +10,8 @@ github.com/tsvsheet/go-isnow v0.1.12 h1:11sxrsaVg9pJa73kRXzc7Zo358XtnqQ4utEALIDH
 github.com/tsvsheet/go-isnow v0.1.12/go.mod h1:tSDPvEzE4DjWKN4GKLsIdzyuTct30jsWwftJ7sh++GM=
 github.com/tsvsheet/go-tq v0.1.11 h1:A/Wo81KSIkQFUns+0dULpCQ5v9rDaS2zQTAJFf9RWrY=
 github.com/tsvsheet/go-tq v0.1.11/go.mod h1:EKEaYABer2iBeHG7YHxrO/+18CGXLT6P5HBTeP0ATZk=
-github.com/tsvsheet/go-tsvsheet v0.28.3 h1:F7jhjrYQDt+bDq1zCOSw0uQhakIuI7/FsdbEo+0nIUE=
-github.com/tsvsheet/go-tsvsheet v0.28.3/go.mod h1:dYnfaOit4WrhDJe50IgzsM5pWiLJR2BkkH40AztQ1lo=
+github.com/tsvsheet/go-tsvsheet v0.28.4 h1:rUGoAiGvTrjWqkN9rFJ3aNvuJPkD6lIwz9y3CUV2zYo=
+github.com/tsvsheet/go-tsvsheet v0.28.4/go.mod h1:lATcbw1Aolv8ZyljYiAvIkBGRV+8It6jK2U8X/FdrOk=
 github.com/urfave/cli/v3 v3.11.0 h1:P/euJp99kb9p0tlVY+iYTLYYTAQlfl0hR2gUO1Img1Q=
 github.com/urfave/cli/v3 v3.11.0/go.mod h1:ysVLtOEmg2tOy6PknnYVhDoouyC/6N42TMeoMzskhso=
 go.yaml.in/yaml/v3 v3.0.5 h1:N6y/pJk8buWs9NY5ERU2HSMfm+IuD/OtfdAnq6kESPw=
