@@ -7,8 +7,8 @@ require (
 	github.com/gomatic/go-log v0.3.16
 	github.com/stretchr/testify v1.12.1
 	github.com/tsvsheet/go-tq v0.1.11
-	github.com/tsvsheet/go-tsvsheet v0.28.3
-	github.com/urfave/cli/v3 v3.11.0
+	github.com/tsvsheet/go-tsvsheet v0.28.4
+	github.com/urfave/cli/v3 v3.12.0
 )
 
 require (
